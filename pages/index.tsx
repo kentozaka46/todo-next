@@ -1,9 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const [text, setText] = useState<string>("");
+  const [todoList, setTodoList] = useState<string[]>(["ToDoです。"]);
   return (
     <div className={styles.container}>
       <Head>
@@ -16,20 +19,33 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>ToDoアプリ</h1>
 
         <div>
-          <input type="text" placeholder="ToDo" />
-          <button>追加</button>
+          <input
+            type="text"
+            placeholder="ToDo"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              setTodoList([...todoList, text]);
+              setText("");
+            }}
+          >
+            追加
+          </button>
         </div>
 
         <h2>ToDo一覧</h2>
 
         <div>
           <ul>
-            <li>
-              <p>ToDoです。</p>
-            </li>
-            <li>
-              <p>ToDoです。</p>
-            </li>
+            {todoList.map((todo, index) => {
+              return (
+                <li key={index}>
+                  <p>{todo}</p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </main>
