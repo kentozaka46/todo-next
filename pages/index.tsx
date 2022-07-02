@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
@@ -42,7 +42,12 @@ const Home: NextPage = () => {
             {todoList.map((todo, index) => {
               return (
                 <li key={index}>
-                  <p>{todo}</p>
+                  <Link
+                    as={"/detail"}
+                    href={{ pathname: "/detail", query: { title: todo } }}
+                  >
+                    <p>{todo}</p>
+                  </Link>
                 </li>
               );
             })}
