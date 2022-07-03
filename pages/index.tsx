@@ -41,7 +41,7 @@ const Home: NextPage = () => {
           <ul>
             {todoList.map((todo, index) => {
               return (
-                <li key={index}>
+                <li key={index} style={{ cursor: "pointer" }}>
                   <Link
                     as={"/detail"}
                     href={{ pathname: "/detail", query: { title: todo } }}
