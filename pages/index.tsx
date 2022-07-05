@@ -1,12 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "../styles/Home.module.css";
+import { TodoListContext } from "./_app";
 
 const Home: NextPage = () => {
   const [text, setText] = useState<string>("");
-  const [todoList, setTodoList] = useState<string[]>(["ToDoです。"]);
+  const { todoList, setTodoList } = useContext(TodoListContext);
+  console.log(todoList);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -37,6 +40,8 @@ const Home: NextPage = () => {
 
         <h2>ToDo一覧</h2>
 
+        {todoList.length === 0 && <p>ToDoはありません。</p>}
+
         <div>
           <ul>
             {todoList.map((todo, index) => {
@@ -44,7 +49,14 @@ const Home: NextPage = () => {
                 <li key={index} style={{ cursor: "pointer" }}>
                   <Link
                     as={"/detail"}
-                    href={{ pathname: "/detail", query: { title: todo } }}
+                    href={{
+                      pathname: "/detail",
+                      query: {
+                        index: index,
+                        title: todo,
+                        todoList: todoList,
+                      },
+                    }}
                   >
                     <p>{todo}</p>
                   </Link>
